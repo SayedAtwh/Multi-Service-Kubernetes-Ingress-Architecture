@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-app1-deployment
+  labels:
+    env: production
+    tier: frontend-app1
+  namespace: k8s-app1-namespace
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      env: production
+      tier: frontend-app1
+  template:
+    metadata:
+      labels:
+        env: production
+        tier: frontend-app1
+    spec:
+      containers:
+        - name: my-container-app1
+          image: sayedatwhdevops/nginx-sample-website:app1
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service-app1
+  labels:
+    env: production
+    tier: frontend-app1
+  namespace: k8s-app1-namespace
+spec:
+  type: ClusterIP
+  selector:
+    env: production
+    tier: frontend-app1
+  ports:
+    - port: 3000
+      targetPort: 80

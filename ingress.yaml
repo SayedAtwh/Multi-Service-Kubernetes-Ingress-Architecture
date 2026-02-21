@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  namespace: k8s-app1-namespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: apl-k8s-apps-1970101946.us-east-1.elb.amazonaws.com
+      http:
+        paths:
+          - pathType: Prefix
+            path: /app1(/|$)(.*)
+            backend:
+              service:
+                name: my-service-app1
+                port:
+                  number: 3000
+          - pathType: Prefix
+            path: /app2(/|$)(.*)
+            backend:
+              service:
+                name: service-proxy
+                port:
+                  number: 6000
