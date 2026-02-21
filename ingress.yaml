@@ -5,20 +5,21 @@ metadata:
   namespace: k8s-app1-namespace
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
+    nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
   rules:
     - host: apl-k8s-apps-1970101946.us-east-1.elb.amazonaws.com
       http:
         paths:
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: /app1(/|$)(.*)
             backend:
               service:
                 name: my-service-app1
                 port:
                   number: 3000
-          - pathType: Prefix
+          - pathType: ImplementationSpecific
             path: /app2(/|$)(.*)
             backend:
               service:
