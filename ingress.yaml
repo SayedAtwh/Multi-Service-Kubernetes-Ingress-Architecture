@@ -8,8 +8,15 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: "true"
 spec:
   ingressClassName: nginx
+
+  # 🔒 TLS section
+  tls:
+    - hosts:
+        - apl-k8s-apps-829538636.us-east-1.elb.amazonaws.com
+      secretName: my-tls-secret-new
+
   rules:
-    - host: apl-k8s-apps-1970101946.us-east-1.elb.amazonaws.com
+    - host: apl-k8s-apps-829538636.us-east-1.elb.amazonaws.com
       http:
         paths:
           - pathType: ImplementationSpecific
